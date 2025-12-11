@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+
 const app = express();
 app.use(express.json());
 
@@ -78,13 +79,13 @@ app.put('/gastos/:id', async (req, res) => {
         if(!mongoose.isValidObjectId(req.params.id)) {
             return res.status(400).json({ error: 'ID inválido' });
         }
-        const aluno = await Gasto.findByIdAndUpdate(
+        const gasto = await Gasto.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true, runValidators: true, overwrite: true}
+            { new: true, runValidators: true}
         );
-        if (!aluno) return res.status(404).json({ error: 'Gasto não econtrado' });
-        res.json(aluno);
+        if (!gasto) return res.status(404).json({ error: 'Gasto não econtrado' });
+        res.json(gasto);
     }catch (err) {
         res.status(400).json({ error: err.message });
     }
